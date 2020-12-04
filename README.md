@@ -1,1 +1,1 @@
-# Solidity_study
+# Repositoty with task for studying Solidity.
