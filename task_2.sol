@@ -1,20 +1,27 @@
 pragma solidity 0.5.1;
 
-contract Uint_type{
-    uint8 number;
-    function set_number(uint8 _number) public {
-        number = _number; 
+contract Task02 {
+
+    uint8 private a;
+    uint8 private b;
+
+    function setAB(uint8 valueA, uint8 valueB) external {
+        a = valueA;
+        b = valueB;
     }
 
-    function get_number() public view returns(uint8) {
-       return number; 
+    function isAddOverflow() external view returns(bool isOverflow, uint8 result) {
+        result = a + b;
+        if (a > b) {
+            isOverflow = result < a;
+        } else {
+            isOverflow = result < b;
+        }
     }
-    
-    function add_nums(uint8 _a, uint8 _b) public pure returns(bool){
-        return (_a+_b)>_a;
+
+    function isSubOverflow() external view returns(bool isOverflow, uint8 result) {
+        result = a - b;
+        isOverflow = result > a;
     }
-    
-    function sub_nums(uint8 _a, uint8 _b) public pure returns(bool){
-        return (_a-_b)<_a;
-    }
+
 }
