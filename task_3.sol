@@ -1,4 +1,4 @@
-pragma solidity 0.5.1;
+pragma solidity 0.6.12;
 
 contract task_3{
     int[] arr;
@@ -19,7 +19,7 @@ contract task_3{
     }
 
     //Удаляем конкретный элемент в масиве, но по факту этот элемент просто превращается в ноль  
-    function dummDeleteFromArray(uint _i) public len(_i){
+    function ZeroingObject(uint _i) public len(_i){
         delete arr[_i];
     }
 
@@ -29,15 +29,14 @@ contract task_3{
         for (uint j = _i; j < arr.length - 1; j++) {
             arr[j] = arr[j + 1];
         } 
-        arr.length--;
+        arr.pop();
     }
 
     //Удаляем конкретный элемент в масиве. Мне кажется, что эта функция должна стоить дешевле, так как тут нет цикла.
     //Соответственно меньше требуется вычислительной мощности
     function smartDeleteFromArrayShort(uint _i) public len(_i){
-        delete arr[_i];
         arr[_i]=arr[arr.length-1];
-        arr.length--;
+        arr.pop();
     }
 
     //Геттер для массива, можно было сделать его явно public, но я решил сделать отдельно геттер.
