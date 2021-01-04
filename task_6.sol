@@ -4,6 +4,8 @@ pragma solidity ^0.6.12;
 contract Task6 {
     mapping (address=>uint256) userDeposit; 
     address payable private owner;
+    event receiveMoney(address sender, uint amount);
+    event sendMoney(address sender, uint amount, string unit);
 
     constructor() public {
         owner = msg.sender;
@@ -51,6 +53,7 @@ contract Task6 {
     function store() external payable{
         require(msg.value > 0);
         userDeposit[msg.sender] = userDeposit[msg.sender] + msg.value;
+        emit receiveMoney(msg.sender, msg.value);
     }
 
     function ownerReceive(uint256 _deposit, string memory _unit) unitCheck(_unit) external onlyOwner{
@@ -59,6 +62,7 @@ contract Task6 {
         require(contractBalance() >= conv_dep);
         owner.transfer(conv_dep);
         userDeposit[owner] = userDeposit[owner] - conv_dep;
+        emit sendMoney(owner, _deposit, _unit);
     }
     
     function userReceive(uint256 _deposit, string memory _unit) unitCheck(_unit) external {
@@ -69,6 +73,7 @@ contract Task6 {
         if (isSend) {
             userDeposit[msg.sender] = userDeposit[msg.sender] - conv_dep;
         } 
+        emit sendMoney(msg.sender, _deposit, _unit);
     }
 
     function getUserDeposit(address _user) view external returns(uint256){
