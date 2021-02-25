@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.7.4;
 
-contract EnumStruct {
+contract WhileFor {
     enum Color {
         Green, Red, Orange, Blue,
         Purple, White, Black
@@ -10,6 +10,8 @@ contract EnumStruct {
         uint32 engineCapacity;
         uint32 wheelsSize;
         uint32 doorAmount;
+        uint256 mileage;
+        uint256 age;
         bool allWheelsDrive;
         Color carColor;
     }
@@ -20,6 +22,8 @@ contract EnumStruct {
         uint32 engineCap,
         uint32 wheelsSize, 
         uint32 doorAmount, 
+        uint256 mileage,
+        uint256 age,
         bool allWheelsDrive,
         Color carColor
     );
@@ -30,6 +34,8 @@ contract EnumStruct {
         uint32 engineCap,
         uint32 wheelsSize, 
         uint32 doorAmount, 
+        uint256 mileage,
+        uint256 age,
         bool allWheelsDrive,
         Color carColor
     );
@@ -38,6 +44,8 @@ contract EnumStruct {
         uint32 _engineCap,
         uint32 _wheelsSize, 
         uint32 _doorAmount, 
+        uint256 _mileage,
+        uint256 _age,
         bool _allWheelsDrive,
         Color _carColor
     )
@@ -47,6 +55,8 @@ contract EnumStruct {
             engineCapacity: _engineCap,
             wheelsSize: _wheelsSize,
             doorAmount: _doorAmount,
+            mileage: _mileage,
+            age: _age,
             allWheelsDrive: _allWheelsDrive,
             carColor: _carColor
             }
@@ -57,6 +67,8 @@ contract EnumStruct {
             _engineCap,
             _wheelsSize, 
             _doorAmount, 
+            _mileage,
+            _age,
             _allWheelsDrive,
             _carColor
         );
@@ -67,6 +79,8 @@ contract EnumStruct {
         uint32 _engineCap,
         uint32 _wheelsSize, 
         uint32 _doorAmount, 
+        uint256 _mileage,
+        uint256 _age,
         bool _allWheelsDrive,
         Color _carColor
     )
@@ -76,6 +90,8 @@ contract EnumStruct {
         cars[_carId].engineCapacity = _engineCap;
         cars[_carId].wheelsSize = _wheelsSize;
         cars[_carId].doorAmount = _doorAmount;
+        cars[_carId].mileage = _mileage;
+        cars[_carId].age = _age;
         cars[_carId].allWheelsDrive = _allWheelsDrive;
         cars[_carId].carColor = _carColor;
 
@@ -85,16 +101,21 @@ contract EnumStruct {
             _engineCap,
             _wheelsSize, 
             _doorAmount, 
+            _mileage,
+            _age,
             _allWheelsDrive,
             _carColor
         );
     }
+
 
     function showCar(uint256 _carId) external view 
         returns(
             uint32, 
             uint32, 
             uint32, 
+            uint256, 
+            uint256, 
             bool, 
             string memory
             )
@@ -103,9 +124,27 @@ contract EnumStruct {
         string memory color = colorChoice(_carId);
         return (
             cars[_carId].engineCapacity, cars[_carId].wheelsSize,
-            cars[_carId].doorAmount, cars[_carId].allWheelsDrive,
-            color
+            cars[_carId].doorAmount, cars[_carId].mileage, cars[_carId].age,
+            cars[_carId].allWheelsDrive, color
             );
+    }
+
+    function increaseCarsMileage(uint32 _mileage) external {
+        for (uint256 i = 0; i < cars.length; i++) {
+            while (_mileage != 0)
+            {
+                cars[i].mileage += 1;
+                _mileage -= 1;
+            }
+        }
+    }
+
+    function increaseCarsAge(uint32 _age) external {
+        for (uint256 i = 0; i < cars.length; i++) {
+            for (uint256 j = 0; j < _age; j++) {
+                cars[i].age += 1;
+            }
+        }
     }
 
     function colorChoice(uint256 _carId) private view returns(string memory){
