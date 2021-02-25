@@ -14,10 +14,25 @@ contract EnumStruct {
         Color carColor;
     }
     CarProperties[] public cars;
-    //Как я понял indexed нужен для того, чтобы проще было искать по 
-    //логам нужную информацию. Тут это не обязательно по моему мнению
-    //так как всего одно поле в логи отправляем.
-    event AddCar(address indexed sender);
+
+    event AddCar(
+        address indexed sender,
+        uint32 engineCap,
+        uint32 wheelsSize, 
+        uint32 doorAmount, 
+        bool allWheelsDrive,
+        Color carColor
+    );
+
+    event EditCar(
+        address indexed sender,
+        uint256 indexed carId, 
+        uint32 engineCap,
+        uint32 wheelsSize, 
+        uint32 doorAmount, 
+        bool allWheelsDrive,
+        Color carColor
+    );
 
     function createCar(
         uint32 _engineCap,
@@ -29,14 +44,22 @@ contract EnumStruct {
         external
     {
         cars.push(CarProperties({
-            engineCapacity:_engineCap,
+            engineCapacity: _engineCap,
             wheelsSize: _wheelsSize,
             doorAmount: _doorAmount,
             allWheelsDrive: _allWheelsDrive,
             carColor: _carColor
             }
         ));
-        emit AddCar(msg.sender);
+
+        emit AddCar(
+            msg.sender,
+            _engineCap,
+            _wheelsSize, 
+            _doorAmount, 
+            _allWheelsDrive,
+            _carColor
+        );
     }
 
     function editCarProperty(
@@ -55,8 +78,29 @@ contract EnumStruct {
         cars[_carId].doorAmount = _doorAmount;
         cars[_carId].allWheelsDrive = _allWheelsDrive;
         cars[_carId].carColor = _carColor;
+
+        emit EditCar(
+            msg.sender,
+            _carId,
+            _engineCap,
+            _wheelsSize, 
+            _doorAmount, 
+            _allWheelsDrive,
+            _carColor
+        );
     }
 
+    function colorChoice(uint256 _carId) private view returns(string memory){
+        string memory color = "";
+        if (cars[_carId].carColor == Color.Black) color = "Black";
+        if (cars[_carId].carColor == Color.Blue) color = "Blue";
+        if (cars[_carId].carColor == Color.Green) color = "Green";
+        if (cars[_carId].carColor == Color.Orange) color = "Orange";
+        if (cars[_carId].carColor == Color.Purple) color = "Purple";
+        if (cars[_carId].carColor == Color.Red) color = "Red";
+        if (cars[_carId].carColor == Color.White) color = "White";
+        return color;
+    }
 // Вот тут не очень понял как правильнее по Style Guide сделать 
     function showCar(uint256 _carId) external view 
         returns(
@@ -68,22 +112,12 @@ contract EnumStruct {
             )
     {
         require(_carId <= cars.length);
-        string memory color = "";
-        //Хотел бы сделать чтобы и при создании и обработке можно было задавать 
-        //цвет строкой, но думаю тогда было проще сделать цвет строкой 
-        if (cars[_carId].carColor == Color.Black) color = "Black";
-        if (cars[_carId].carColor == Color.Blue) color = "Blue";
-        if (cars[_carId].carColor == Color.Green) color = "Green";
-        if (cars[_carId].carColor == Color.Orange) color = "Orange";
-        if (cars[_carId].carColor == Color.Purple) color = "Purple";
-        if (cars[_carId].carColor == Color.Red) color = "Red";
-        if (cars[_carId].carColor == Color.White) color = "White";
-        //Прочитал, что можно включить ABIEncoderV2, но так как это эксперементальная 
-        //функция, пока лучше отдавать структуру так:
+        string memory color = colorChoice(_carId);
         return (
             cars[_carId].engineCapacity, cars[_carId].wheelsSize,
             cars[_carId].doorAmount, cars[_carId].allWheelsDrive,
             color
             );
     }
+
 }
