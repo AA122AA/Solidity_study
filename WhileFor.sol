@@ -129,17 +129,18 @@ contract WhileFor {
             );
     }
 
-    function increaseCarsMileage(uint32 _mileage) external {
+    function increaseCarsMileage(uint256 _mileage) external {
         for (uint256 i = 0; i < cars.length; i++) {
-            while (_mileage != 0)
+            uint256 j = 0;
+            while (j != _mileage)
             {
                 cars[i].mileage += 1;
-                _mileage -= 1;
+                j++;
             }
         }
     }
 
-    function increaseCarsAge(uint32 _age) external {
+    function increaseCarsAge(uint256 _age) external {
         for (uint256 i = 0; i < cars.length; i++) {
             for (uint256 j = 0; j < _age; j++) {
                 cars[i].age += 1;
