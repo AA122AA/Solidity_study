@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.6.12;
+pragma solidity ^0.7.4;
 
-import "./task_5_0.sol";
+import "./Task5_0.sol";
 
 contract second is first{
   function isBiggerZeroAdd(int256 _a, int256 _b) public pure returns(bool state, int256 res){

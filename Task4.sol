@@ -1,6 +1,7 @@
-pragma solidity 0.6.12;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.7.4;
 
-contract task_4 {
+contract Task4 {
     mapping (address=>mapping(uint=>bool)) deposit_type;
 
     function addDepositType(address _user, uint _type, bool _premition ) external {

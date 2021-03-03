@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.6.12;
+pragma solidity ^0.7.4;
 
 contract B {
     function _addition(int256 _a, int256 _b) internal pure returns(int256) {

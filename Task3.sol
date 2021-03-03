@@ -1,6 +1,7 @@
-pragma solidity 0.6.12;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.7.4;
 
-contract task_3{
+contract Task3{
     int[] arr;
 
     //Не уверен правильно ли это, но я решил добавить проверку на вводимый индекс

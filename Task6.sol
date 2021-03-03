@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.6.12;
+pragma solidity ^0.7.4;
 
 contract Task6 {
     mapping (address=>uint256) userDeposit; 
@@ -7,7 +7,7 @@ contract Task6 {
     event receiveMoney(address sender, uint amount);
     event sendMoney(address sender, uint amount, string unit);
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
     }
 
