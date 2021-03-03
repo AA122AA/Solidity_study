@@ -121,7 +121,7 @@ contract WhileFor {
             )
     {
         require(_carId <= cars.length);
-        string memory color = colorChoice(_carId);
+        string memory color = colorChoice(cars[_carId].carColor);
         return (
             cars[_carId].engineCapacity, cars[_carId].wheelsSize,
             cars[_carId].doorAmount, cars[_carId].mileage, cars[_carId].age,
@@ -130,6 +130,7 @@ contract WhileFor {
     }
 
     function increaseCarsMileage(uint256 _mileage) external {
+        require(_mileage < 1000, "Hold on, don't drive that much. 999 miles max.");
         for (uint256 i = 0; i < cars.length; i++) {
             uint256 j = 0;
             while (j != _mileage)
@@ -141,6 +142,7 @@ contract WhileFor {
     }
 
     function increaseCarsAge(uint256 _age) external {
+        require(_age < 100, "Car can't live that long");
         for (uint256 i = 0; i < cars.length; i++) {
             for (uint256 j = 0; j < _age; j++) {
                 cars[i].age += 1;
@@ -148,15 +150,15 @@ contract WhileFor {
         }
     }
 
-    function colorChoice(uint256 _carId) private view returns(string memory){
+    function colorChoice(Color _carColor) private pure returns(string memory){
         string memory color = "";
-        if (cars[_carId].carColor == Color.Black) color = "Black";
-        if (cars[_carId].carColor == Color.Blue) color = "Blue";
-        if (cars[_carId].carColor == Color.Green) color = "Green";
-        if (cars[_carId].carColor == Color.Orange) color = "Orange";
-        if (cars[_carId].carColor == Color.Purple) color = "Purple";
-        if (cars[_carId].carColor == Color.Red) color = "Red";
-        if (cars[_carId].carColor == Color.White) color = "White";
+        if (_carColor == Color.Black) color = "Black";
+        if (_carColor == Color.Blue) color = "Blue";
+        if (_carColor == Color.Green) color = "Green";
+        if (_carColor == Color.Orange) color = "Orange";
+        if (_carColor == Color.Purple) color = "Purple";
+        if (_carColor == Color.Red) color = "Red";
+        if (_carColor == Color.White) color = "White";
         return color;
     }
 }
